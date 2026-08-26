@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Battleship — play against the AI</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Battleship</h1>
+      <p class="tagline">Place your fleet, then sink the computer's ships before it sinks yours.</p>
+    </header>
+
+    <main>
+      <section id="setup" class="panel">
+        <h2>1. Deploy your fleet</h2>
+        <p class="hint">
+          Pick a ship, hover your waters to preview, and click to drop it.
+          Press <kbd>R</kbd> or the rotate button to change direction.
+          Click a placed ship to pick it up again.
+        </p>
+        <ul id="fleet-list" class="fleet-list"></ul>
+        <div class="controls">
+          <button id="rotate-btn" type="button">Rotate (<span id="orientation-label">horizontal</span>)</button>
+          <button id="random-btn" type="button">Random fleet</button>
+          <button id="clear-btn" type="button">Clear</button>
+          <button id="start-btn" type="button" class="primary" disabled>Start battle</button>
+        </div>
+      </section>
+
+      <section class="boards">
+        <div class="board-wrap">
+          <h2>Your waters</h2>
+          <div id="player-board" class="board" aria-label="Your board"></div>
+        </div>
+        <div class="board-wrap">
+          <h2>Enemy waters</h2>
+          <div id="enemy-board" class="board enemy" aria-label="Enemy board"></div>
+          <ul id="enemy-fleet" class="tracker"></ul>
+        </div>
+      </section>
+
+      <section class="panel status-panel">
+        <p id="status" class="status">Deploy your fleet to begin.</p>
+        <ol id="log" class="log" aria-live="polite"></ol>
+        <button id="restart-btn" type="button">New game</button>
+      </section>
+    </main>
+
+    <div id="overlay" class="overlay hidden">
+      <div class="overlay-card">
+        <h2 id="overlay-title">Victory!</h2>
+        <p id="overlay-text"></p>
+        <button id="overlay-btn" type="button" class="primary">Play again</button>
+      </div>
+    </div>
+
+    <footer>
+      <a href="https://github.com/" id="repo-link" target="_blank" rel="noopener">Source code</a>
+    </footer>
+
+    <script type="module" src="src/ui.js"></script>
+  </body>
+</html>

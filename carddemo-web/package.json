@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
+    "gen:fixtures": "node scripts/gen-fixtures.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

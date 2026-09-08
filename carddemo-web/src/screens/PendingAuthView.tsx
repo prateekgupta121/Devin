@@ -57,8 +57,8 @@ function PendingAuthScreen() {
     setDecision(null)
   }
 
-  const pageBack = () => (p <= 1 ? msg.error(MSG.cardNoPrevPages) : setParams({}, { page: String(p - 1), size: params.get('size') ?? undefined }))
-  const pageFwd = () => (p >= pageCount ? msg.error(MSG.cardNoMorePages) : setParams({}, { page: String(p + 1), size: params.get('size') ?? undefined }))
+  const pageBack = () => (p <= 1 ? msg.error(MSG.cardNoPrevPages) : (msg.clear(), setParams({}, { page: String(p - 1), size: params.get('size') ?? undefined })))
+  const pageFwd = () => (p >= pageCount ? msg.error(MSG.cardNoMorePages) : (msg.clear(), setParams({}, { page: String(p + 1), size: params.get('size') ?? undefined })))
 
   return (
     <Screen

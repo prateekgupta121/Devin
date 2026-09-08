@@ -50,7 +50,7 @@ function TranListScreen() {
     msg.clear()
   }
 
-  const gotoPage = (n: number) => setParams({}, { page: String(n), size: String(pageSize) })
+  const gotoPage = (n: number) => { msg.clear(); setParams({}, { page: String(n), size: String(pageSize) }) }
   const pageBack = () => (p <= 1 ? msg.error(MSG.tranAlreadyTop) : gotoPage(p - 1))
   const pageFwd = () => (p >= pageCount ? msg.error(MSG.tranAlreadyBottom) : gotoPage(p + 1))
 

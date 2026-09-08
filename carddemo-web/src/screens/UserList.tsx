@@ -49,10 +49,12 @@ function UserListScreen() {
 
   const pageBack = () => {
     if (p <= 1) return msg.error(MSG.tranAlreadyTop)
+    msg.clear()
     setParams({}, { q: q || undefined, page: String(p - 1), size: params.get('size') ?? undefined })
   }
   const pageFwd = () => {
     if (p >= pageCount) return msg.error(MSG.tranAlreadyBottom)
+    msg.clear()
     setParams({}, { q: q || undefined, page: String(p + 1), size: params.get('size') ?? undefined })
   }
 

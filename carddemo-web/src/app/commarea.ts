@@ -44,11 +44,12 @@ export function useCommarea() {
     [params],
   )
 
-  // Caller entry: pathname plus its screen-specific params (page, size, ...),
-  // encoded as `path;k=v;k=v` so F3 restores the exact originating view.
+  // Caller entry: pathname plus the caller's full query state (commarea keys and
+  // screen-specific params such as page/size), encoded as `path;k=v;k=v` so F3
+  // restores the exact originating view rather than the callee's selection.
   const callerEntry = useCallback(() => {
-    const extras = [...params.entries()].filter(([k]) => !(KEYS as readonly string[]).includes(k) && k !== 'from')
-    return [location.pathname, ...extras.map(([k, v]) => `${k}=${v}`)].join(';')
+    const entries = [...params.entries()].filter(([k]) => k !== 'from')
+    return [location.pathname, ...entries.map(([k, v]) => `${k}=${v}`)].join(';')
   }, [location.pathname, params])
 
   const build = useCallback(
@@ -80,8 +81,15 @@ export function useCommarea() {
     (fallback: string, patch: CommareaPatch = {}, message?: string) => {
       const stack = [...commarea.from]
       const [dest, ...pairs] = (stack.pop() ?? fallback).split(';')
-      const extra = Object.fromEntries(pairs.map((p) => p.split('=') as [string, string]))
-      navigate(build(dest, patch, stack, extra), { state: message ? { message } : undefined })
+      const saved = Object.fromEntries(pairs.map((p) => p.split('=') as [string, string]))
+      const extra: Record<string, string> = {}
+      const restored: CommareaPatch = {}
+      for (const [k, v] of Object.entries(saved)) {
+        if ((KEYS as readonly string[]).includes(k)) restored[k as (typeof KEYS)[number]] = v
+        else extra[k] = v
+      }
+      if (pairs.length) for (const k of KEYS) if (k !== 'user' && restored[k] === undefined) restored[k] = ''
+      navigate(build(dest, { ...restored, ...patch }, stack, extra), { state: message ? { message } : undefined })
     },
     [build, commarea.from, navigate],
   )

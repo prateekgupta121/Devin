@@ -57,7 +57,7 @@ function CardListScreen() {
     if (a !== commarea.acct || c !== commarea.card) setParams({ acct: a, card: c }, { page: '1', size: String(pageSize) })
   }
 
-  const gotoPage = (n: number) => setParams({}, { page: String(n), size: String(pageSize) })
+  const gotoPage = (n: number) => { msg.clear(); setParams({}, { page: String(n), size: String(pageSize) }) }
   const pageBack = () => (p <= 1 ? msg.error(MSG.cardNoPrevPages) : gotoPage(p - 1))
   const pageFwd = () => (p >= pageCount ? msg.error(MSG.cardNoMorePages) : gotoPage(p + 1))
 

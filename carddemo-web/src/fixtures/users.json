@@ -1,0 +1,72 @@
+[
+  {
+    "userId": "ADMIN001",
+    "firstName": "MARGARET",
+    "lastName": "GOLD",
+    "password": "PASSWORD",
+    "type": "A"
+  },
+  {
+    "userId": "ADMIN002",
+    "firstName": "RUSSELL",
+    "lastName": "RUSSELL",
+    "password": "PASSWORD",
+    "type": "A"
+  },
+  {
+    "userId": "ADMIN003",
+    "firstName": "RAYMOND",
+    "lastName": "WHITMORE",
+    "password": "PASSWORD",
+    "type": "A"
+  },
+  {
+    "userId": "ADMIN004",
+    "firstName": "EMMANUEL",
+    "lastName": "CASGRAIN",
+    "password": "PASSWORD",
+    "type": "A"
+  },
+  {
+    "userId": "ADMIN005",
+    "firstName": "GRANVILLE",
+    "lastName": "LACHAPELLE",
+    "password": "PASSWORD",
+    "type": "A"
+  },
+  {
+    "userId": "USER0001",
+    "firstName": "LAWRENCE",
+    "lastName": "THOMAS",
+    "password": "PASSWORD",
+    "type": "U"
+  },
+  {
+    "userId": "USER0002",
+    "firstName": "AJITH",
+    "lastName": "KUMAR",
+    "password": "PASSWORD",
+    "type": "U"
+  },
+  {
+    "userId": "USER0003",
+    "firstName": "LAURITZ",
+    "lastName": "ALME",
+    "password": "PASSWORD",
+    "type": "U"
+  },
+  {
+    "userId": "USER0004",
+    "firstName": "AVERARDO",
+    "lastName": "MAZZI",
+    "password": "PASSWORD",
+    "type": "U"
+  },
+  {
+    "userId": "USER0005",
+    "firstName": "LEE",
+    "lastName": "TING",
+    "password": "PASSWORD",
+    "type": "U"
+  }
+]

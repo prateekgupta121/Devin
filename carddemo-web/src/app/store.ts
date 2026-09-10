@@ -74,6 +74,21 @@ function load(): StoreState {
 let state: StoreState = load()
 const listeners = new Set<() => void>()
 
+// Re-read persisted state (if any) so no tab commits a stale copy of another tab's edits.
+function syncFromStorage() {
+  try {
+    if (localStorage.getItem(STORAGE_KEY)) state = load()
+  } catch {
+    // storage unavailable; keep in-memory state
+  }
+}
+
+window.addEventListener('storage', (e) => {
+  if (e.key !== STORAGE_KEY) return
+  syncFromStorage()
+  listeners.forEach((l) => l())
+})
+
 function commit(next: StoreState) {
   state = next
   try {
@@ -182,8 +197,9 @@ function scheduleJob(job: ReportJob) {
 for (const job of state.reportJobs) scheduleJob(job)
 
 function setJobStatus(jobId: string, status: ReportJob['status'], output?: string) {
+  syncFromStorage()
   const job = state.reportJobs.find((j) => j.jobId === jobId)
-  if (!job) return
+  if (!job || job.status === status || job.status === 'COMPLETE') return
   commit({
     ...state,
     reportJobs: replaceIn(state.reportJobs, (j) => j.jobId === jobId, { ...job, status, output: output ?? job.output }),

@@ -7,6 +7,7 @@ import { LEN } from '../app/format'
 import { MSG, THANK_YOU } from '../app/messages'
 import { findUser, resetStore } from '../app/store'
 import { useCommarea } from '../app/commarea'
+import { signIn } from '../app/session'
 
 const BANNER = `+========================================+
 |%%%%%%%  NATIONAL RESERVE NOTE  %%%%%%%%|
@@ -35,6 +36,7 @@ export function SignOn() {
     if (!user) { setBad('user'); return msg.error(MSG.userNotFound) }
     if (user.password !== password.toUpperCase()) { setBad('pwd'); return msg.error(MSG.wrongPassword) }
     setBad(null)
+    signIn(user.userId)
     navigate(`${user.type === 'A' ? '/admin' : '/menu'}?user=${encodeURIComponent(user.userId)}`)
   }
 

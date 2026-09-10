@@ -4,6 +4,7 @@
 // returns to the actual caller rather than a fixed parent.
 import { useCallback, useMemo } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { signOut } from './session'
 
 export interface Commarea {
   user: string
@@ -110,7 +111,10 @@ export function useCommarea() {
 
   /** Sign off: drop all context. */
   const signOff = useCallback(
-    (message?: string) => navigate('/signon', { state: message ? { message } : undefined }),
+    (message?: string) => {
+      signOut()
+      navigate('/signon', { state: message ? { message } : undefined })
+    },
     [navigate],
   )
 

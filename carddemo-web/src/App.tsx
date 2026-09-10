@@ -4,6 +4,7 @@ import { ROUTES } from './app/menus'
 import { findUser, useStore } from './app/store'
 import { isEnabled, type FeatureFlag } from './app/flags'
 import { MSG } from './app/messages'
+import { signedOnUser } from './app/session'
 import { SignOn } from './screens/SignOn'
 import { Menu } from './screens/Menu'
 import { AccountView } from './screens/AccountView'
@@ -28,7 +29,8 @@ function Guard({ admin, flag, children }: { admin?: boolean; flag?: FeatureFlag;
   useStore()
   const [params] = useSearchParams()
   const location = useLocation()
-  const user = findUser(params.get('user') ?? '')
+  const uid = params.get('user') ?? ''
+  const user = uid && uid === signedOnUser() ? findUser(uid) : undefined
   if (!user) return <Navigate to={ROUTES.signon} replace state={{ message: MSG.enterUserId }} />
   if (admin && user.type !== 'A') {
     return <Navigate to={`${ROUTES.menu}?user=${encodeURIComponent(user.userId)}`} replace state={{ message: MSG.adminOnly }} />

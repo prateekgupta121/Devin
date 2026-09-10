@@ -111,6 +111,7 @@ export const MSG = {
   dateEmpty: (which: 'Start' | 'End', part: 'Month' | 'Day' | 'Year') => `${which} Date - ${part} can NOT be empty...`,
   dateInvalidPart: (which: 'Start' | 'End', part: 'Month' | 'Day' | 'Year') => `${which} Date - Not a valid ${part}...`,
   dateInvalid: (which: 'Start' | 'End') => `${which} Date - Not a valid date...`,
+  dateRangeInvalid: 'End Date must not be before Start Date...',
   // COUSR00C..03C
   userInvalidSel: 'Invalid selection. Valid values are U and D',
   userIdEmpty: 'User ID can NOT be empty...',

@@ -33,7 +33,7 @@ export function UserAdd() {
     if (v) { setBadField(v.field); return msg.error(v.error) }
     const id = form.userId.trim().toUpperCase()
     if (findUser(id)) { setBadField('userId'); return msg.error(MSG.userExists) }
-    const user: User = { userId: id, firstName: form.firstName.trim(), lastName: form.lastName.trim(), password: form.password, type: form.type }
+    const user: User = { userId: id, firstName: form.firstName.trim(), lastName: form.lastName.trim(), password: form.password.toUpperCase(), type: form.type }
     addUser(user)
     setForm(EMPTY)
     setBadField(null)

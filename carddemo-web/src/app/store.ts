@@ -162,12 +162,24 @@ export function deleteUser(userId: string) {
   commit({ ...state, users: state.users.filter((u) => u.userId !== userId) })
 }
 
+const RUNNING_AFTER_MS = 1500
+const COMPLETE_AFTER_MS = 4000
+
 export function submitReportJob(job: ReportJob) {
   commit({ ...state, reportJobs: [job, ...state.reportJobs] })
-  // Simulated batch: SUBMITTED -> RUNNING -> COMPLETE.
-  setTimeout(() => setJobStatus(job.jobId, 'RUNNING'), 1500)
-  setTimeout(() => setJobStatus(job.jobId, 'COMPLETE', renderReport(job)), 4000)
+  scheduleJob(job)
 }
+
+// Simulated batch: SUBMITTED -> RUNNING -> COMPLETE, timed from submittedAt so
+// jobs persisted mid-flight resume (or finish immediately) after a reload.
+function scheduleJob(job: ReportJob) {
+  const elapsed = Date.now() - new Date(job.submittedAt.replace(' ', 'T') + 'Z').getTime()
+  const at = (ms: number, fn: () => void) => setTimeout(fn, Math.max(0, ms - elapsed))
+  if (job.status === 'SUBMITTED') at(RUNNING_AFTER_MS, () => setJobStatus(job.jobId, 'RUNNING'))
+  if (job.status !== 'COMPLETE') at(COMPLETE_AFTER_MS, () => setJobStatus(job.jobId, 'COMPLETE', renderReport(job)))
+}
+
+for (const job of state.reportJobs) scheduleJob(job)
 
 function setJobStatus(jobId: string, status: ReportJob['status'], output?: string) {
   const job = state.reportJobs.find((j) => j.jobId === jobId)

@@ -55,7 +55,7 @@ function UserUpdateScreen() {
   const commit = () => {
     setConfirm(false)
     if (!form || !user) return
-    updateUser({ ...user, ...form, firstName: form.firstName.trim(), lastName: form.lastName.trim() })
+    updateUser({ ...user, ...form, firstName: form.firstName.trim(), lastName: form.lastName.trim(), password: form.password.toUpperCase() })
     msg.info(MSG.userUpdated(user.userId))
   }
 

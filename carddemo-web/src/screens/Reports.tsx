@@ -60,6 +60,7 @@ export function Reports() {
       if (s) { setBad(`start-${s.part}`); return msg.error(s.error) }
       const en = validateDateParts('End', end)
       if (en) { setBad(`end-${en.part}`); return msg.error(en.error) }
+      if (toIso(start) > toIso(end)) { setBad('end-d'); return msg.error(MSG.dateRangeInvalid) }
     }
     setBad(null)
     msg.info(MSG.confirmReport(type))

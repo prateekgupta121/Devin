@@ -191,18 +191,19 @@ function scheduleJob(job: ReportJob) {
   const elapsed = Date.now() - new Date(job.submittedAt.replace(' ', 'T') + 'Z').getTime()
   const at = (ms: number, fn: () => void) => setTimeout(fn, Math.max(0, ms - elapsed))
   if (job.status === 'SUBMITTED') at(RUNNING_AFTER_MS, () => setJobStatus(job.jobId, 'RUNNING'))
-  if (job.status !== 'COMPLETE') at(COMPLETE_AFTER_MS, () => setJobStatus(job.jobId, 'COMPLETE', renderReport(job)))
+  if (job.status !== 'COMPLETE') at(COMPLETE_AFTER_MS, () => setJobStatus(job.jobId, 'COMPLETE'))
 }
 
 for (const job of state.reportJobs) scheduleJob(job)
 
-function setJobStatus(jobId: string, status: ReportJob['status'], output?: string) {
+function setJobStatus(jobId: string, status: ReportJob['status']) {
   syncFromStorage()
   const job = state.reportJobs.find((j) => j.jobId === jobId)
   if (!job || job.status === status || job.status === 'COMPLETE') return
+  const output = status === 'COMPLETE' ? renderReport(job) : job.output
   commit({
     ...state,
-    reportJobs: replaceIn(state.reportJobs, (j) => j.jobId === jobId, { ...job, status, output: output ?? job.output }),
+    reportJobs: replaceIn(state.reportJobs, (j) => j.jobId === jobId, { ...job, status, output }),
   })
 }
 

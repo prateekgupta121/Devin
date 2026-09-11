@@ -4,7 +4,7 @@ description: Run and test the fixture-backed CardDemo web UI locally.
 ---
 
 # Local setup
-- Work in `/home/ubuntu/repos/Devin/carddemo-web`.
+- Work in the `carddemo-web/` directory at the repo root (introduced by PR #1, branch `devin/1788890847-carddemo-web-ui`; check it out or merge it first if the directory is absent).
 - Use Node 22: `source ~/.nvm/nvm.sh && nvm use 22`.
 - Install dependencies with `npm install`; run `npx vite --port 5173 --strictPort`.
 - Open `http://localhost:5173` and sign on through the UI with fixture credentials `ADMIN001/PASSWORD` or `USER0001/PASSWORD`.
